@@ -41,16 +41,18 @@ iconset = ['0','1','2','3','4','5','6','7','8','9','0','a','b','c','d','e','f','
 
 
 imageset = []
-
+count1=0
 for letter in iconset:
     for img in os.listdir('./iconset/%s/'%(letter)):
         temp = []
         if img != "Thumbs.db" and img != ".DS_Store": # windows check...
             temp.append(buildvector(Image.open("./iconset/%s/%s"%(letter,img))))
+            count1=count1+1
         imageset.append({letter:temp})
+print count1
 
 
-im = Image.open("2.gif")
+im = Image.open("b1tlzh.gif")
 im2 = Image.new("P",im.size,255)
 im.convert("P")
 temp = {}
@@ -59,7 +61,7 @@ for x in range(im.size[1]):
     for y in range(im.size[0]):
         pix = im.getpixel((y,x))
         temp[pix] = pix
-        if pix == 220 or pix == 227: # these are the numbers to get
+        if pix == 220 or pix==227: # these are the numbers to get
             im2.putpixel((y,x),0)
 
 inletter = False
