@@ -4,7 +4,7 @@ import hashlib
 import time
 import os
 
-im = Image.open("2.gif")
+im = Image.open("2_1.gif")
 # (将图片转换为8位像素模式)
 im.convert("P")
 

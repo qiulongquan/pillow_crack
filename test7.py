@@ -49,7 +49,7 @@ for letter in iconset:
         imageset.append({letter:temp})
 
 
-im = Image.open("2.gif")
+im = Image.open("2_1.gif")
 im2 = Image.new("P",im.size,255)
 im.convert("P")
 temp = {}

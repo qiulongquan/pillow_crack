@@ -1,7 +1,7 @@
 #-*- coding:utf8 -*-
 from PIL import Image
 
-im = Image.open("2.gif")
+im = Image.open("2_1.gif")
 im.convert("P")
 im2 = Image.new("P",im.size,255)
 
