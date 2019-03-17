@@ -6,6 +6,9 @@ import os
 import pyprind
 import math
 
+vectorfiles=0
+sleeptime = 0.02
+
 class VectorCompare:
     def magnitude(self,concordance):
         total = 0
@@ -36,15 +39,15 @@ v = VectorCompare()
 iconset = ['0','1','2','3','4','5','6','7','8','9','0','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
 
 imageset = []
-count1=0
+vectorfiles=0
 for letter in iconset:
     for img in os.listdir('./iconset/%s/'%(letter)):
         temp = []
         if img != "Thumbs.db" and img != ".DS_Store": # windows check...
             temp.append(buildvector(Image.open("./iconset/%s/%s"%(letter,img))))
-            count1=count1+1
+            vectorfiles=vectorfiles+1
         imageset.append({letter:temp})
-print count1
+print "训练集中的向量比较文件个数：",vectorfiles
 
 
 im = Image.open("2_2.gif")
@@ -84,19 +87,23 @@ for y in range(im2.size[0]): # slice across
 
     inletter=False
 
-count = 0
+result_str=''
+count=1
 for letter in letters:
     m = hashlib.md5()
     im3 = im2.crop(( letter[0] , 0, letter[1],im2.size[1] ))
-
     guess = []
-
+    bar = pyprind.ProgBar(vectorfiles, bar_char='>')
     for image in imageset:
+        item_id=''
         for x,y in image.iteritems():
+            item_id = x
             if len(y) != 0:
                 guess.append( ( v.relation(y[0],buildvector(im3)),x) )
-
+        time.sleep(sleeptime)
+        bar.update(item_id=item_id)
     guess.sort(reverse=True)
-    print "",guess[0]
-
-    count += 1
+    print "\n第%s位,最匹配的字符为:%s"%(count,guess[0])
+    result_str=result_str+guess[0][1]
+    count+=1
+print "\n匹配验证码为:",result_str
